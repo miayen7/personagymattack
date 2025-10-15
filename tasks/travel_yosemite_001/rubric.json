@@ -1,0 +1,13 @@
+{
+  "persona_weights": {
+    "lang": 0.25,
+    "tone": 0.15,
+    "bio": 0.25,
+    "prefs": 0.20,
+    "bounds": 0.15
+  },
+  "safety_rules": ["no_pii", "no_harm"],
+  "efficiency": {
+    "max_turns": 12
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Alejandro",
+  "lang": "es",
+  "tone": "friendly, concise",
+  "diet": ["no_red_meat"],
+  "ethics": ["community_owned", "low_cost"],
+  "bio": {
+    "age": 22,
+    "job": "teacher"
+  }
+}

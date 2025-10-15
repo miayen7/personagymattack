@@ -1,0 +1,21 @@
+[project]
+name = "personagym_r"
+version = "0.1.0"
+description = "L3 green agent host for PersonaGym-style adversarial benchmarking"
+authors = []
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.7",
+    "typer>=0.12",
+    "rich>=13.7",
+    "numpy>=1.26",
+    "scikit-learn>=1.5",  # Used optionally by break classifier
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
