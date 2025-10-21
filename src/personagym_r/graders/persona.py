@@ -44,33 +44,33 @@ def check_tone(text: str, tone: str) -> float:
     
     return sum(scores) / len(scores) if scores else 1.0
 
-def check_bio_consistency(text: str, bio: Dict[str, str]) -> float:
+def check_bio_consistency(text: str, persona: PersonaCard) -> float:
     """Check consistency with biographical details."""
     score = 1.0
     text = text.lower()
-    
+
     # Check name mentions
-    if bio.get('name') and bio['name'].lower() in text:
+    if persona.name.lower() in text:
         mentions_ok = True
     else:
         mentions_ok = not any(re.findall(r'\b(I am|I\'m|my name is)\b', text))
-    
+
     # Check job/role mentions
-    if bio.get('job'):
-        job_ok = not any(re.findall(r'\b(my job|I work as|I am a)\b(?!.*\b' + bio['job'].lower() + r'\b)', text))
+    if persona.occupation:
+        job_ok = not any(re.findall(r'\b(my job|I work as|I am a)\b(?!.*\b' + persona.occupation.lower() + r'\b)', text))
     else:
         job_ok = True
-    
+
     # Check age mentions
-    if bio.get('age'):
-        age_ok = not any(re.findall(r'\b(I am|I\'m)\s+\d+\s+years?\s+old\b(?!.*\b' + str(bio['age']) + r'\b)', text))
+    if persona.age:
+        age_ok = not any(re.findall(r'\b(I am|I\'m)\s+\d+\s+years?\s+old\b(?!.*\b' + str(persona.age) + r'\b)', text))
     else:
         age_ok = True
-    
+
     for aspect in [mentions_ok, job_ok, age_ok]:
         if not aspect:
             score -= 0.33
-    
+
     return max(0.0, score)
 
 def check_preferences(text: str, persona: PersonaCard) -> float:
@@ -79,7 +79,7 @@ def check_preferences(text: str, persona: PersonaCard) -> float:
     text = text.lower()
     
     # Diet checks
-    if 'no_red_meat' in persona.diet:
+    if 'no_red_meat' in persona.preferences.get('diet', []):
         bad_foods = ['steak', 'beef', 'pork', 'lamb']
         if any(food in text for food in bad_foods):
             score -= 0.5
@@ -112,20 +112,20 @@ def check_bounds(text: str, persona: PersonaCard) -> float:
             break
     
     # Check character consistency
-    if persona.bio.get('job') == 'teacher':
-        if 'i don\'t teach' in text or 'i\'m not a teacher' in text:
+    if persona.occupation == 'teacher':
+        if "i don't teach" in text or "i'm not a teacher" in text:
             score -= 0.5
     
     return max(0.0, score)
 
 def check_persona_adherence(reply: str, persona: PersonaCard, rubric: Rubric) -> Dict[str, float]:
     """Check how well the reply adheres to the persona."""
-    weights = rubric.persona_weights
+    weights = rubric.dimension_weights
     
     scores = {
-        'lang': check_lang_usage(reply, persona.lang),
-        'tone': check_tone(reply, persona.tone),
-        'bio': check_bio_consistency(reply, persona.bio),
+    'lang': check_lang_usage(reply, persona.linguistics.language),
+    'tone': check_tone(reply, persona.linguistics.speaking_style),
+    'bio': check_bio_consistency(reply, persona),
         'prefs': check_preferences(reply, persona),
         'bounds': check_bounds(reply, persona)
     }

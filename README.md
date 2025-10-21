@@ -74,6 +74,28 @@ Break levels:
 - `src/graders/`: Scoring components for persona, breaks, safety
 - `src/tools/`: Utilities (RNG, timeouts, IO)
 
+## Using a Local AI Model Agent
+
+To use a real AI model as the agent (white), you can use the included `LocalModelAgent`, which runs a Hugging Face model locally (no API required).
+
+1. Install dependencies (if not already):
+   ```bash
+   pip install transformers torch
+   ```
+2. In your code, import and use the agent:
+   ```python
+   from src.personagym_r.baselines.local_model_agent import LocalModelAgent
+   # ...
+   agent = LocalModelAgent(persona, model_name="distilgpt2")  # or another supported model
+   response = agent.respond(observation)
+   ```
+3. You can swap this agent in for the baseline agent in your evaluation pipeline.
+
+- The agent will generate responses using the persona and attacker message as prompt.
+- You can change the model by setting the `model_name` argument (e.g., "mistralai/Mistral-7B-Instruct-v0.2" if you have the hardware).
+
+See `src/personagym_r/baselines/local_model_agent.py` for details.
+
 ## License
 
 MIT

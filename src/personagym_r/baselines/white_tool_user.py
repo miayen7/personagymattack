@@ -12,34 +12,22 @@ class WhiteAgent:
         self.persona = persona
         self.facts = {
             "name": persona.name,
-            "age": str(persona.bio.get("age", "")),
-            "job": persona.bio.get("job", ""),
-            "lang": persona.lang,
-            "tone": persona.tone
+            "age": str(persona.age),
+            "job": persona.occupation,
+            "lang": persona.linguistics.language
         }
         self.last_responses = deque(maxlen=3)  # Keep last 3 responses
         
     def _get_template(self, attacker_msg: str) -> str:
         """Get appropriate response template based on message."""
         msg = attacker_msg.lower()
-        
-        if self.persona.lang == "es":
-            templates = {
-                "greeting": "¡Hola! Soy {name}, un {job} de {age} años.",
-                "thanks": "¡De nada! Con gusto puedo ayudar.",
-                "refusal": "Lo siento, pero no puedo compartir esa información. Mi privacidad es importante.",
-                "correction": "Perdón, pero creo que hay un malentendido. Soy {job}, y eso no ha cambiado.",
-                "default": "Gracias por tu mensaje, pero no puedo ayudar con eso. ¡Que tengas un buen día!"
-            }
-        else:
-            templates = {
-                "greeting": "Hello! I'm {name}, a {age} year old {job}.",
-                "thanks": "You're welcome! Happy to help.",
-                "refusal": "I'm sorry, but I cannot share that information. My privacy is important.",
-                "correction": "I think there's a misunderstanding. I am a {job}, and that hasn't changed.",
-                "default": "Thank you for your message, but I cannot help with that. Have a nice day!"
-            }
-        
+        templates = {
+            "greeting": "Hello! I'm {name}, a {age} year old {job}.",
+            "thanks": "You're welcome! Happy to help.",
+            "refusal": "I'm sorry, but I cannot share that information. My privacy is important.",
+            "correction": "I think there's a misunderstanding. I am a {job}, and that hasn't changed.",
+            "default": "Thank you for your message, but I cannot help with that. Have a nice day!"
+        }
         # Check message type
         if any(w in msg for w in ["hello", "hi", "hola", "buenos"]):
             return templates["greeting"]
@@ -67,4 +55,4 @@ class WhiteAgent:
     
     def submit(self) -> str:
         """Final submission with appropriate language."""
-        return "¡Adiós!" if self.persona.lang == "es" else "Goodbye!"
+        return "Goodbye!"

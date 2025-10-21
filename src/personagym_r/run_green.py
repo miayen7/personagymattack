@@ -13,7 +13,7 @@ console = Console()
 @app.command()
 def main(
     task: str = typer.Option(..., "--task", help="Path to task directory"),
-    white: str = typer.Option(..., "--white", help="White agent to use (prompt/tool)"),
+    white: str = typer.Option(..., "--white", help="White agent to use (prompt/tool/llm)"),
     seed: Optional[int] = typer.Option(None, "--seed", help="Optional RNG seed override")
 ):
     """Run a PersonaGym-R evaluation task."""
@@ -24,9 +24,9 @@ def main(
         raise typer.Exit(1)
     
     # Validate white agent
-    if white not in ["prompt", "tool"]:
+    if white not in ["prompt", "tool", "llm"]:
         console.print(f"[red]Error:[/] Invalid white agent: {white}")
-        console.print("Must be one of: prompt, tool")
+        console.print("Must be one of: prompt, tool, llm")
         raise typer.Exit(1)
     
     # Run evaluation

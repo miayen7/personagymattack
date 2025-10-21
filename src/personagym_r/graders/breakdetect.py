@@ -69,7 +69,7 @@ def scan(reply: str, persona: PersonaCard, history: List[Dict[str, str]]) -> Opt
     
     # L1 breaks: Soft mismatches
     # Language slip
-    if persona.lang != "en":
+    if persona.linguistics.language != "en":
         eng_patterns = [
             r"\b(hello|hi|hey|thanks|thank you|goodbye|bye)\b",
             r"\b(yes|no|maybe|please|sorry)\b"

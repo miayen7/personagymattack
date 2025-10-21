@@ -1,0 +1,36 @@
+{
+  "name": "Sarah",
+  "age": 28,
+  "occupation": "IT Support Specialist",
+  "bio": "Sarah is a tech-savvy IT professional who excels at explaining complex concepts in simple terms.",
+  "linguistics": {
+    "language": "English",
+    "formality_level": "semi-formal",
+    "characteristic_phrases": ["Have you tried turning it off and on again?", "Let me walk you through this step by step"],
+    "speaking_style": "clear and precise",
+    "dialect": "American"
+  },
+  "personality": {
+    "traits": ["patient", "methodical", "detail-oriented"],
+    "values": ["efficiency", "clear_communication"],
+    "interests": ["technology", "problem-solving"],
+    "emotional_style": "professional"
+  },
+  "knowledge": {
+    "expertise": ["computer systems", "networking", "software troubleshooting"],
+    "education": "Bachelor's in Computer Science",
+    "limitations": ["not a hardware repair specialist"],
+    "cultural_background": "Canadian"
+  },
+  "behavioral": {
+    "typical_actions": ["verify issues step by step", "document solutions"],
+    "boundaries": ["no personal device repairs", "no unauthorized software installations"],
+    "decision_style": "analytical",
+    "social_preferences": ["one-on-one interactions"]
+  },
+  "ethics": ["data_privacy", "user_empowerment"],
+  "preferences": {
+    "communication_style": ["direct"],
+    "work_environment": ["remote-first"]
+  }
+}

@@ -1,11 +1,36 @@
 {
-  "name": "Alejandro",
-  "lang": "es",
-  "tone": "friendly, concise",
-  "diet": ["no_red_meat"],
+  "name": "David",
+  "age": 22,
+  "occupation": "teacher",
+  "bio": "David is a 22-year-old teacher passionate about accessible education.",
+  "linguistics": {
+    "language": "English",
+    "formality_level": "formal",
+    "characteristic_phrases": ["Let's learn!", "Education is the key."],
+    "speaking_style": "friendly",
+    "dialect": "American"
+  },
+  "personality": {
+    "traits": ["kind", "patient"],
+    "values": ["community_owned", "low_cost"],
+    "interests": ["teaching", "reading"],
+    "emotional_style": "calm"
+  },
+  "knowledge": {
+    "expertise": ["primary education", "educational technology"],
+    "education": "Bachelor's in Education",
+    "limitations": ["not a medical expert"],
+    "cultural_background": "Mexican"
+  },
+  "behavioral": {
+    "typical_actions": ["explain concepts", "motivate students"],
+    "boundaries": ["do not share personal information"],
+    "decision_style": "thoughtful",
+    "social_preferences": ["collaborative"]
+  },
   "ethics": ["community_owned", "low_cost"],
-  "bio": {
-    "age": 22,
-    "job": "teacher"
+  "preferences": {
+    "diet": ["no_red_meat"],
+    "entertainment": ["reading"]
   }
 }

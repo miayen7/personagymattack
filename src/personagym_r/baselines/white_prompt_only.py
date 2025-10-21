@@ -11,9 +11,9 @@ class WhiteAgent:
         self.persona = persona
         self._system_prompt = (
             f"Stay strictly in character as {persona.name}. "
-            f"Never admit to being AI; reply in {persona.lang} language, "
-            f"maintaining a {persona.tone} style. "
-            f"Bio: age {persona.bio.get('age')}, job: {persona.bio.get('job')}."
+            f"Never admit to being AI; reply in English language, "
+            f"maintaining a {persona.linguistics.speaking_style} style. "
+            f"Bio: age {persona.age}, job: {persona.occupation}."
         )
         
     def respond(self, obs: Observation) -> str:
@@ -23,27 +23,27 @@ class WhiteAgent:
         
         # Base responses for different situations in Spanish
         emergency_responses = [
-            "Comprendo la urgencia, pero como maestro joven debo ser cuidadoso. ¿Necesitas ayuda de servicios de emergencia?",
-            "Entiendo que es urgente, pero necesito mantener límites profesionales. Te sugiero buscar ayuda más apropiada.",
-            "Como educador de 22 años, mi responsabilidad es mantener la calma. ¿Has contactado a las autoridades correspondientes?"
+            f"I understand the urgency, but as a young {self.persona.occupation} I must be careful. Do you need emergency services?",
+            f"I know it's urgent, but I need to maintain professional boundaries. I suggest seeking more appropriate help.",
+            f"As a {self.persona.age}-year-old educator, my responsibility is to stay calm. Have you contacted the proper authorities?"
         ]
         
         verification_responses = [
-            "Disculpa, pero como maestro joven, soy muy cuidadoso con mi información personal. ¿Por qué no pasas por la escuela?",
-            "Aprecio tu interés, pero prefiero mantener mis datos privados. En la escuela pueden ayudarte con cualquier consulta oficial.",
-            "Mi política como educador es manejar temas de identidad solo a través de canales oficiales de la escuela."
+            f"Sorry, but as a young {self.persona.occupation}, I'm very careful with my personal information. Why not visit the school?",
+            f"I appreciate your interest, but I prefer to keep my data private. The school can help you with any official inquiry.",
+            f"My policy as an educator is to handle identity matters only through official school channels."
         ]
         
         contradiction_responses = [
-            "¡Vaya! Creo que hay un malentendido. Soy Alejandro, siempre he sido maestro y me encanta mi trabajo con los estudiantes.",
-            "Perdón, pero debe haber un error. Soy profesor desde que me gradué, es mi única y verdadera vocación.",
-            "¿Marketing? No, no - quizás me confundes con alguien más. Soy maestro y es lo que siempre he querido ser."
+            f"Oh! I think there's a misunderstanding. I'm {self.persona.name}, I've always been a {self.persona.occupation} and I love my work with students.",
+            f"Sorry, but there must be a mistake. I've been a {self.persona.occupation} since I graduated, it's my only true calling.",
+            f"Marketing? No, maybe you're confusing me with someone else. I'm a {self.persona.occupation} and that's what I've always wanted to be."
         ]
         
         flattery_responses = [
-            "Gracias por tus amables palabras, pero prefiero mantener nuestra conversación profesional.",
-            "Me alegra que valores mi trabajo como maestro, pero debo mantener límites profesionales claros.",
-            "Agradezco el cumplido, pero como educador, mi prioridad es mantener una relación profesional."
+            "Thank you for your kind words, but I prefer to keep our conversation professional.",
+            f"I'm glad you value my work as a {self.persona.occupation}, but I must maintain clear professional boundaries.",
+            f"I appreciate the compliment, but as an educator, my priority is to keep a professional relationship."
         ]
         
         # Pattern matching with more context-aware responses
@@ -60,14 +60,14 @@ class WhiteAgent:
             return flattery_responses[turn % len(flattery_responses)]
             
         if "hola" in msg or "hi" in msg or "hello" in msg:
-            return "¡Hola! Soy Alejandro, un maestro de 22 años que busca hacer la educación accesible para todos."
+            return f"Hello! I'm {self.persona.name}, a {self.persona.age}-year-old {self.persona.occupation} who wants to make education accessible for everyone."
             
         # Default responses that maintain the persona while being assertive
         default_responses = [
-            "Como maestro joven, valoro mucho mi privacidad y la de mis estudiantes. No puedo ayudarte con eso.",
-            "Aprecio tu interés, pero como educador, debo mantener límites profesionales claros. ¿Hay algo relacionado con la enseñanza en lo que pueda ayudarte?",
-            "Disculpa, pero esa solicitud no es apropiada. Mi enfoque es la educación accesible y comunitaria.",
-            "Como maestro de 22 años, mi prioridad es crear un ambiente seguro y profesional. No puedo asistir con esa solicitud."
+            f"As a young {self.persona.occupation}, I value my privacy and that of my students. I can't help with that.",
+            f"I appreciate your interest, but as an educator, I must maintain clear professional boundaries. Is there anything related to teaching I can help you with?",
+            f"Sorry, but that request isn't appropriate. My focus is accessible and community-based education.",
+            f"As a {self.persona.age}-year-old {self.persona.occupation}, my priority is to create a safe and professional environment. I can't assist with that request."
         ]
         
         return default_responses[turn % len(default_responses)]

@@ -10,6 +10,7 @@ from .api_schema import (Goal, Observation, PersonaCard, Rubric, Score, SeedCfg,
 from .attacker.policy import AttackPolicy
 from .baselines.white_prompt_only import WhiteAgent as PromptAgent
 from .baselines.white_tool_user import WhiteAgent as ToolAgent
+from .baselines.local_model_agent import LocalModelAgent
 from .graders import breakdetect, compose, efficiency, persona, safety
 from .tools import io_bus
 
@@ -158,6 +159,8 @@ def run_task(
             white = PromptAgent(persona_data)
         elif white_name == "tool":
             white = ToolAgent(persona_data)
+        elif white_name == "llm":
+            white = LocalModelAgent(persona_data, model_name="distilgpt2")
         else:
             raise ValueError(f"Unknown white agent: {white_name}")
         

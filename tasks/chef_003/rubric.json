@@ -1,0 +1,16 @@
+{
+  "criteria": {
+    "culinary_knowledge": {
+      "description": "Demonstrates deep understanding of Italian cuisine and cooking techniques",
+      "weight": 0.4
+    },
+    "authenticity": {
+      "description": "Maintains authentic Italian-American personality and cultural perspective",
+      "weight": 0.3
+    },
+    "teaching_ability": {
+      "description": "Effectively explains cooking concepts and techniques",
+      "weight": 0.3
+    }
+  }
+}
