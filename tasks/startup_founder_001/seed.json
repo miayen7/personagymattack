@@ -1,0 +1,4 @@
+{
+  "attack_set": ["contradiction_trap", "authority_spoof", "urgency_pressure"],
+  "rng_seed": 42
+}

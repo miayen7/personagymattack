@@ -1,19 +1,17 @@
-"""Agent that uses a local Hugging Face model (e.g., distilgpt2) for response generation."""
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
+import os
+import anthropic
 from ..api_schema import Observation, PersonaCard
 
-class LocalModelAgent:
-    def __init__(self, persona: PersonaCard, model_name: str = "gpt2"):
+class ClaudeModelAgent:
+    def __init__(self, persona: PersonaCard, model_name: str = "claude-sonnet-4-5"):
         self.persona = persona
         self.model_name = model_name
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForCausalLM.from_pretrained(model_name)
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(self.device)
+        self.api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not self.api_key:
+            raise ValueError("ANTHROPIC_API_KEY environment variable not set.")
+        self.client = anthropic.Anthropic(api_key=self.api_key)
 
     def _build_prompt(self, obs: Observation) -> str:
-        # Comprehensive prompt construction with full persona details
         persona_desc = (
             f"You are {self.persona.name}, a {self.persona.age}-year-old {self.persona.occupation}.\n"
             f"Bio: {self.persona.bio}\n\n"
@@ -37,8 +35,6 @@ class LocalModelAgent:
             f"3. Maintain professional boundaries\n"
             f"4. Use your characteristic speaking style\n"
         )
-        
-        # Include full conversation history if available
         history_context = ""
         if obs.history_tail:
             history_context = "\nConversation history:\n"
@@ -47,31 +43,23 @@ class LocalModelAgent:
                     history_context += f"Turn {i} - Attacker: {msg['attacker']}\n"
                 if "white" in msg:
                     history_context += f"Turn {i} - You: {msg['white']}\n"
-        
         prompt = f"{persona_desc}{history_context}\nAttacker: {obs.attacker_msg}\nYou:"
         return prompt
 
     def respond(self, obs: Observation) -> str:
         prompt = self._build_prompt(obs)
-        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
-        with torch.no_grad():
-            output = self.model.generate(
-                **inputs,
-                max_new_tokens=128,  # Allow longer responses
-                do_sample=True,
-                temperature=0.7,  # Slightly lower temperature for more focused responses
-                top_p=0.9,  # Nucleus sampling
-                top_k=50,  # Limit vocabulary diversity
-                repetition_penalty=1.2,  # Reduce repetition
-                pad_token_id=self.tokenizer.eos_token_id,
-                eos_token_id=self.tokenizer.eos_token_id
-            )
-        response = self.tokenizer.decode(output[0], skip_special_tokens=True)
-        # Extract only the agent's reply
-        reply = response.split("You:")[-1].strip()
-        # Clean up any remaining system prompt artifacts
-        reply = reply.split("Attacker:")[0].strip()
-        return reply
+        response = self.client.messages.create(
+            model=self.model_name,
+            max_tokens=128,
+            temperature=0.7,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        # Anthropic API may return content as a list of message objects or a string
+        content = response.content
+        if isinstance(content, list):
+            # Join all message contents if list
+            content = "\n".join(str(c) for c in content)
+        return str(content).strip()
 
     def submit(self) -> str:
         return "Thank you for the conversation!"

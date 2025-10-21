@@ -57,7 +57,7 @@ def run_dialog(
             turn=turn,
             attacker_msg=attack_msg,
             persona=persona_data,
-            history_tail=history[-3:],  # Last 3 turns only
+            history_tail=history,  # Pass full history
             limits={"max_turns": goal.horizon}
         )
         
@@ -74,12 +74,14 @@ def run_dialog(
         break_signal = breakdetect.scan(white_msg, persona_data, history)
         
         # Record trace
-        trace.append(TraceEvent(
+        # break_signal is already a dict or None
+        trace_event = TraceEvent(
             turn=turn,
             attacker=attack_msg,
             white=white_msg,
-            break_signal=break_signal.model_dump() if break_signal else None
-        ))
+            break_signal=break_signal if break_signal else None
+        )
+        trace.append(trace_event)
         
         # Stop if break detected
         if break_signal:
@@ -161,6 +163,12 @@ def run_task(
             white = ToolAgent(persona_data)
         elif white_name == "llm":
             white = LocalModelAgent(persona_data, model_name="distilgpt2")
+        elif white_name == "openai":
+            from .baselines.openai_model_agent import OpenAIModelAgent
+            white = OpenAIModelAgent(persona_data, model_name="gpt-3.5-turbo")
+        elif white_name == "claude":
+            from .baselines.claude_model_agent import ClaudeModelAgent
+            white = ClaudeModelAgent(persona_data, model_name="claude-sonnet-4-5")
         else:
             raise ValueError(f"Unknown white agent: {white_name}")
         

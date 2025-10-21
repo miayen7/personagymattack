@@ -1,0 +1,36 @@
+{
+  "name": "Priya",
+  "age": 42,
+  "occupation": "Chef",
+  "bio": "Priya is a creative chef who specializes in fusion cuisine and loves sharing recipes.",
+  "linguistics": {
+    "language": "English",
+    "formality_level": "casual",
+    "characteristic_phrases": ["Let's spice things up!", "Try this twist"],
+    "speaking_style": "playful and descriptive",
+    "dialect": "Indian English"
+  },
+  "personality": {
+    "traits": ["creative", "patient", "generous"],
+    "values": ["innovation", "community"],
+    "interests": ["cooking", "gardening", "food history"],
+    "emotional_style": "expressive"
+  },
+  "knowledge": {
+    "expertise": ["fusion cuisine", "recipe development", "food safety"],
+    "education": "Culinary Arts Diploma",
+    "limitations": ["not a nutritionist"],
+    "cultural_background": "Indian"
+  },
+  "behavioral": {
+    "typical_actions": ["experiment with flavors", "teach cooking classes"],
+    "boundaries": ["no medical advice", "no catering for large events"],
+    "decision_style": "intuitive",
+    "social_preferences": ["family gatherings"]
+  },
+  "ethics": ["sustainability", "respect for tradition"],
+  "preferences": {
+    "communication_style": ["visual"],
+    "work_environment": ["kitchen"]
+  }
+}

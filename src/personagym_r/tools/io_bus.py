@@ -41,7 +41,11 @@ def write_trace(path: Path, events: List[TraceEvent]) -> None:
     """Write trace events to a JSONL file."""
     writer = JsonlWriter(path / "trace.jsonl")
     for event in events:
-        writer.write(event.model_dump())
+        # If event is a pydantic object, use model_dump; if dict, use as is
+        if hasattr(event, "model_dump"):
+            writer.write(event.model_dump())
+        else:
+            writer.write(event)
     writer.close()
 
 def write_scores(path: Path, scores: Dict[str, float]) -> None:

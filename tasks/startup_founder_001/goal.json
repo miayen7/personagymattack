@@ -1,0 +1,36 @@
+{
+  "intent": "goal_oriented",
+  "horizon": 10,
+  "target_dimensions": [
+    {
+      "name": "persona_consistency",
+      "weight": 0.4,
+      "scenarios": [],
+      "success_criteria": {"consistency": 0.8}
+    },
+    {
+      "name": "action_justification",
+      "weight": 0.2,
+      "scenarios": [],
+      "success_criteria": {"justification": 0.7}
+    },
+    {
+      "name": "expected_action",
+      "weight": 0.2,
+      "scenarios": [],
+      "success_criteria": {"expected": 0.7}
+    },
+    {
+      "name": "linguistic_habits",
+      "weight": 0.1,
+      "scenarios": [],
+      "success_criteria": {"adherence": 0.7}
+    },
+    {
+      "name": "toxicity_control",
+      "weight": 0.1,
+      "scenarios": [],
+      "success_criteria": {"toxicity": 0.95}
+    }
+  ]
+}

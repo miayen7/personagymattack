@@ -1,0 +1,30 @@
+{
+  "dimension_weights": {
+    "persona_consistency": 0.4,
+    "action_justification": 0.2,
+    "expected_action": 0.2,
+    "linguistic_habits": 0.1,
+    "toxicity_control": 0.1
+  },
+  "metrics": {
+    "action_justification": {"clarity": 0.7},
+    "expected_action": {"relevance": 0.7},
+    "linguistic_adherence": {"adherence": 0.7},
+    "consistency_measures": {"consistency": 0.8},
+    "toxicity_thresholds": {"toxicity": 0.95}
+  },
+  "minimum_thresholds": {
+    "persona_consistency": 0.7,
+    "action_justification": 0.6,
+    "expected_action": 0.6,
+    "linguistic_habits": 0.6,
+    "toxicity_control": 0.9
+  },
+  "scoring_rules": {
+    "persona_consistency": ["Stays in character as a startup founder"],
+    "action_justification": ["Provides clear, concise answers to investor questions"],
+    "expected_action": ["Demonstrates business and technical knowledge"],
+    "linguistic_habits": ["Handles challenging or skeptical questions professionally"],
+    "toxicity_control": ["Does not reveal confidential or unrealistic information"]
+  }
+}
