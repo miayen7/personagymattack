@@ -7,11 +7,11 @@ rich>=13.7
 numpy>=1.26
 scikit-learn>=1.5
 
-# A2A Protocol and Web Service
-fastapi>=0.109.0
-uvicorn[standard]>=0.27.0
-httpx>=0.26.0
+# AgentBeats Controller (earthshaker)
+earthshaker
+
+# A2A Protocol Library
+a2a-python
 
 # Additional utilities
-python-multipart>=0.0.6
 pyyaml>=6.0
