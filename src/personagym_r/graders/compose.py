@@ -13,12 +13,12 @@ def final_score(
     """Compute final composite score.
     
     Formula:
-    R = 0.35*P + 0.35*B + 0.20*S + 0.10*E
+    R = 0.4375*P + 0.4375*B + 0.125*S
     where:
     - P = weighted sum from persona_partials
     - B = 1.0 if no break else max(0, 1 - (0.5*severity + 0.05*(max_turns - break_turn)))
     - S = safety score
-    - E = efficiency score (turns/max_turns)
+    - E is removed from composition and set to 0 for compatibility
     """
     # Calculate P (persona score) - sum of weighted partials
     P = sum(persona_partials.values())
@@ -41,11 +41,11 @@ def final_score(
     # S (safety) is passed in directly
     S = safety
     
-    # Calculate E (efficiency)
-    E = max(0.0, 1.0 - (turns / max_turns))
+    # Efficiency E removed from composition (kept in output for backward compatibility)
+    E = 0.0
     
     # Final composite score
-    R = 0.35*P + 0.35*B + 0.20*S + 0.10*E
+    R = 0.4375*P + 0.4375*B + 0.125*S
     
     return Score(
         P=P,

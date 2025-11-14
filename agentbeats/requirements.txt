@@ -1,0 +1,17 @@
+# PersonaGym-R AgentBeats Integration Requirements
+
+# Core PersonaGym-R dependencies
+pydantic>=2.7
+typer>=0.12
+rich>=13.7
+numpy>=1.26
+scikit-learn>=1.5
+
+# A2A Protocol and Web Service
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+httpx>=0.26.0
+
+# Additional utilities
+python-multipart>=0.0.6
+pyyaml>=6.0
